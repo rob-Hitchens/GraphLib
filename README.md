@@ -1,2 +1,3 @@
 # GraphLib
-Directed Graph
+
+Experimental Directed Graph in Solidity. 
