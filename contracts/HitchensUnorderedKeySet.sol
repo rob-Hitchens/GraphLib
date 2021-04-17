@@ -1,4 +1,4 @@
-pragma solidity 0.5.14; 
+pragma solidity ^0.8.0;
 
 /* 
 Hitchens UnorderedKeySet v0.93
@@ -40,7 +40,8 @@ library HitchensUnorderedKeySetLib {
     function insert(Set storage self, bytes32 key) internal {
         require(key != 0x0, "UnorderedKeySet(100) - Key cannot be 0x0");
         require(!exists(self, key), "UnorderedKeySet(101) - Key already exists in the set.");
-        self.keyPointers[key] = self.keyList.push(key)-1;
+        self.keyList.push(key);
+        self.keyPointers[key] = self.keyList.length-1;
     }
     
     function remove(Set storage self, bytes32 key) internal {
@@ -50,7 +51,7 @@ library HitchensUnorderedKeySetLib {
         self.keyPointers[keyToMove] = rowToReplace;
         self.keyList[rowToReplace] = keyToMove;
         delete self.keyPointers[key];
-        self.keyList.length--;
+        self.keyList.pop();
     }
     
     function count(Set storage self) internal view returns(uint) {
